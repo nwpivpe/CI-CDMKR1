@@ -1,5 +1,3 @@
-import sys
-
 def read_file(input_file):
     """
     Зчитує вміст файлу та повертає список рядків.
@@ -32,13 +30,12 @@ def write_to_file(output_file, lines):
         print(f"Сталася помилка під час запису у файл: {e}")
 
 def main():
-    if len(sys.argv) != 3:
-        print("Використання: python script.py <вхідний_файл> <ключове_слово>")
-    else:
-        _, input_file, keyword = sys.argv
-        lines = read_file(input_file)
-        filtered_lines = filter_lines(lines, keyword)
-        write_to_file('filtered.txt', filtered_lines)
+    input_file = input("Введіть назву вхідного файлу: ").strip()
+    keyword = input("Введіть ключове слово: ").strip()
+
+    lines = read_file(input_file)
+    filtered_lines = filter_lines(lines, keyword)
+    write_to_file('filtered.txt', filtered_lines)
 
 if __name__ == "__main__":
     main()

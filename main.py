@@ -1,41 +1,22 @@
-def read_file(input_file):
-    """
-    Зчитує вміст файлу та повертає список рядків.
-    """
+def filter_lines(input_file, keyword, output_file):
+    """Фільтрує рядки, що містять ключове слово, з вхідного файлу і записує їх у вихідний файл."""
     try:
-        with open(input_file, 'r', encoding='utf-8') as infile:
-            return infile.readlines()
+        with open(input_file, 'r') as infile:
+            lines = infile.readlines()
+        
+        filtered_lines = [line for line in lines if keyword in line]
+
+        with open(output_file, 'w') as outfile:
+            outfile.writelines(filtered_lines)
+        print(f"Збережено {len(filtered_lines)} рядків у файл {output_file}")
     except FileNotFoundError:
-        print(f"Помилка: Файл '{input_file}' не знайдено.")
-        return []
+        print(f"Файл {input_file} не знайдений!")
     except Exception as e:
-        print(f"Сталася помилка під час зчитування файлу: {e}")
-        return []
+        print(f"Сталася помилка: {e}")
 
-def filter_lines(lines, keyword):
-    """
-    Відбирає рядки з ключовим словом.
-    """
-    return [line for line in lines if keyword in line]
+# Приклад використання функції
+input_file = 'example.txt'
+keyword = 'приколад'  # Ваше ключове слово
+output_file = 'filtered.txt'
 
-def write_to_file(output_file, lines):
-    """
-    Записує відфільтровані рядки у файл.
-    """
-    try:
-        with open(output_file, 'w', encoding='utf-8') as outfile:
-            outfile.writelines(lines)
-        print(f"{len(lines)} рядків було записано у '{output_file}'")
-    except Exception as e:
-        print(f"Сталася помилка під час запису у файл: {e}")
-
-def main():
-    input_file = input("Введіть назву вхідного файлу: ").strip()
-    keyword = input("Введіть ключове слово: ").strip()
-
-    lines = read_file(input_file)
-    filtered_lines = filter_lines(lines, keyword)
-    write_to_file('filtered.txt', filtered_lines)
-
-if __name__ == "__main__":
-    main()
+filter_lines(input_file, keyword, output_file)
